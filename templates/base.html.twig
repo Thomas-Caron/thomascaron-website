@@ -6,7 +6,21 @@
         <title>{% block title %}Thomas Caron - Développeur Web Fullstack (Symfony & Vue.js){% endblock %}</title>
         <meta name="description" content="{% block meta_description %}Thomas Caron, développeur web fullstack à Nantes ou en fullremote, plus de 4 ans d'expérience, expert Symfony et Vue.js. J’accompagne les entreprises dans la création d’applications web sur mesure, performantes et évolutives. Besoin d’un site ou d’une application ? Contactez-moi !{% endblock %}">
 
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="icon" type="image/png" href="/build/images/favicon/favicon-96x96.png" sizes="96x96" />
+        <link rel="icon" type="image/svg+xml" href="/build/images/favicon/favicon.svg" />
+        <link rel="shortcut icon" href="/build/images/favicon/favicon.ico" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/build/images/favicon/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-title" content="ThomasC" />
+        <link rel="manifest" href="/build/images/favicon/site.webmanifest" />
+
+        <meta property="og:title" content="Thomas Caron - Développeur Web Fullstack (Symfony & Vue.js)">
+        <meta property="og:description" content="Thomas Caron, développeur web fullstack à Nantes ou en fullremote, plus de 4 ans d'expérience, expert Symfony et Vue.js. J’accompagne les entreprises dans la création d’applications web sur mesure, performantes et évolutives. Besoin d’un site ou d’une application ? Contactez-moi !">
+        <meta property="og:image" content="https://www.thomascaron.com/build/images/preview.jpg">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:image:type" content="image/jpeg">
+        <meta property="og:url" content="https://www.thomascaron.com">
+        <meta property="og:type" content="website">
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -18,6 +32,8 @@
     </head>
     <body>
         {% block body %}
+
+            <div {{ vue_component('Homepage') }}></div>
 
         {% endblock %}
     </body>

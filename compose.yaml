@@ -3,6 +3,7 @@ services:
 ###> doctrine/doctrine-bundle ###
   database:
     image: postgres:${POSTGRES_VERSION:-16}-alpine
+    container_name: ${PROJECT_NAME}_postgres
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}
       # You should definitely change the password in production
@@ -13,11 +14,52 @@ services:
       timeout: 5s
       retries: 5
       start_period: 60s
+    networks:
+      - ${PROJECT_NAME}_web
     volumes:
       - database_data:/var/lib/postgresql/data:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
+
+  adminer:
+    image: adminer:latest
+    container_name: ${PROJECT_NAME}_adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: ${PROJECT_NAME}_postgres
+    networks:
+      - ${PROJECT_NAME}_web
+    ports:
+      - "8080:80"
+    depends_on:
+      - database
+
+  php:
+    build:
+      context: .
+    container_name: ${PROJECT_NAME}_php
+    # command: sh -c "php-fpm & php bin/console messenger:consume async --no-interaction --limit=10"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - ${PROJECT_NAME}_web
+
+  nginx:
+    image: nginx:latest
+    container_name: ${PROJECT_NAME}_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - .:/var/www/html
+    depends_on:
+      - php
+    networks:
+      - ${PROJECT_NAME}_web
+
+networks:
+  portfolio_web:
+      driver: bridge
 
 volumes:
 ###> doctrine/doctrine-bundle ###

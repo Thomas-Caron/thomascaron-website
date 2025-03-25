@@ -1,0 +1,37 @@
+{
+    "scripts": {
+        "dc:build": "docker compose up -d --build",
+        "dc:down": "docker compose down",
+        "watch": "yarn encore dev --watch",
+        "build:prod": "yarn encore production"
+    },
+    "devDependencies": {
+        "@babel/core": "^7.26.9",
+        "@babel/preset-env": "^7.26.9",
+        "@hotwired/stimulus": "^3.0.0",
+        "@hotwired/turbo": "^7.1.1 || ^8.0",
+        "@symfony/stimulus-bridge": "^3.2.0",
+        "@symfony/ux-turbo": "file:vendor/symfony/ux-turbo/assets",
+        "@symfony/ux-vue": "file:vendor/symfony/ux-vue/assets",
+        "@symfony/webpack-encore": "^5.1.0",
+        "copy-webpack-plugin": "^13.0.0",
+        "sass": "^1.85.1",
+        "sass-loader": "^16.0.1",
+        "vue": "^3.0",
+        "webpack": "^5.98.0",
+        "webpack-cli": "^6.0.1",
+        "webpack-notifier": "^1.15.0"
+    },
+    "dependencies": {
+        "@tailwindcss/postcss": "^4.0.12",
+        "autoprefixer": "^10.4.21",
+        "core-js": "3",
+        "flowbite": "^3.1.2",
+        "gsap": "^3.12.7",
+        "postcss": "^8.5.3",
+        "postcss-loader": "^8.1.1",
+        "tailwindcss": "^4.0.12",
+        "three": "^0.174.0",
+        "vue-loader": "^17"
+    }
+}

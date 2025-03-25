@@ -1,0 +1,19 @@
+{% extends 'emails/base_email.html.twig' %}
+
+{% block email_title %}{{ subject }}{% endblock %}
+
+{% block subject %}{{ subject }}{% endblock %}
+
+{% block body %}
+    <p><strong>Nouveau message de :</strong> {{ username }}</p>
+    <p><strong>Informations le concernant :</strong></p>
+    <ul>
+        <li><strong>Téléphone :</strong> {{ phone }}</li>
+        <li><strong>Mail :</strong> {{ mail }}</li>
+    </ul>
+
+    <p><strong>Son message :</strong></p>
+    <blockquote style="border-left: 4px solid #F4BE7E; padding-left: 16px; margin-left: 0; font-style: italic;">
+        {{ message }}
+    </blockquote>
+{% endblock %}

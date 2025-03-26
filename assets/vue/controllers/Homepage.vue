@@ -14,13 +14,13 @@
     <Reference />
     <Contact  @showToast="showToast" />
     <Footer />
-    <Back />
+    <TopReturn />
 </template>
 
 <script setup>
 import { ref } from 'vue';
 
-import Back from '../components/Back.vue';
+import TopReturn from '../components/TopReturn.vue';
 import Toast from '../components/Toast.vue';
 import Header from '../layout/Header.vue';
 import Hero from '../layout/Hero.vue';

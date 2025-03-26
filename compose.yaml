@@ -2,31 +2,35 @@
 services:
 ###> doctrine/doctrine-bundle ###
   database:
-    image: postgres:${POSTGRES_VERSION:-16}-alpine
-    container_name: ${PROJECT_NAME}_postgres
+    image: mysql:${DB_VERSION:-8.4}
+    container_name: ${PROJECT_NAME}_mysql
+    platform: linux/amd64
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-!ChangeMe!}
-      POSTGRES_USER: ${POSTGRES_USER:-app}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-!ChangeMe!}
+      MYSQL_DATABASE: ${DB_DATABASE:-app}
+      MYSQL_USER: ${DB_USER:-app}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-!ChangeMe!}
     healthcheck:
-      test: ["CMD", "pg_isready", "-d", "${POSTGRES_DB:-app}", "-U", "${POSTGRES_USER:-app}"]
+      test: ["CMD", "mysqladmin", "ping", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
       timeout: 5s
       retries: 5
       start_period: 60s
     networks:
       - ${PROJECT_NAME}_web
     volumes:
-      - database_data:/var/lib/postgresql/data:rw
+      - database_data:/var/lib/mysql:rw
       # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
       # - ./docker/db/data:/var/lib/postgresql/data:rw
 ###< doctrine/doctrine-bundle ###
 
-  adminer:
-    image: adminer:latest
-    container_name: ${PROJECT_NAME}_adminer
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: ${PROJECT_NAME}_phpmyadmin
+    platform: linux/amd64
     environment:
-      ADMINER_DEFAULT_SERVER: ${PROJECT_NAME}_postgres
+      PMA_HOST: ${PROJECT_NAME}_mysql
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASSWORD}
     networks:
       - ${PROJECT_NAME}_web
     ports:
@@ -38,7 +42,6 @@ services:
     build:
       context: .
     container_name: ${PROJECT_NAME}_php
-    # command: sh -c "php-fpm & php bin/console messenger:consume async --no-interaction --limit=10"
     volumes:
       - .:/var/www/html
     networks:

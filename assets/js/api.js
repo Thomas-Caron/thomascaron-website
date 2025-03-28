@@ -1,4 +1,4 @@
-const apiBaseUrl = process.env.DOMAIN + '/api';
+const apiBaseUrl = window.location.origin + '/api';
 
 const api = {
     async get(route) {

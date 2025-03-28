@@ -1,4 +1,4 @@
-const apiBaseUrl = 'http://portfolio.local/api';
+const apiBaseUrl = process.env.DOMAIN + '/api';
 
 const api = {
     async get(route) {

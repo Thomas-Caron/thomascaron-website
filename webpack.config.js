@@ -1,3 +1,4 @@
+const Dotenv = require('dotenv-webpack');
 const Encore = require('@symfony/webpack-encore');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
@@ -82,6 +83,8 @@ Encore
             { from: 'assets/images', to: 'images' }
         ]
     }))
+
+    .addPlugin(new Dotenv())
 ;
 
 module.exports = Encore.getWebpackConfig();

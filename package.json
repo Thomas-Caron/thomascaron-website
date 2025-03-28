@@ -16,7 +16,6 @@
         "@symfony/ux-vue": "file:vendor/symfony/ux-vue/assets",
         "@symfony/webpack-encore": "^5.1.0",
         "copy-webpack-plugin": "^13.0.0",
-        "dotenv-webpack": "^8.1.0",
         "sass": "^1.85.1",
         "sass-loader": "^16.0.1",
         "vue": "^3.0",

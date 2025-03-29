@@ -18,7 +18,7 @@
                 <p class="text-white text-lg text-center font-bold mt-3">En cours de développement</p>
             </div>
 
-            <img class="w-full h-50 object-cover" :src="image.path" :alt="image.alt" />
+            <img class="w-full h-50 object-cover" :src="image.path" :alt="image.alt" width="400px" height="200px" loading="lazy" />
             <div class="p-5">
                 <time class="block text-dark text-right text-sm font-extralight mb-3">{{ time }}</time>
 

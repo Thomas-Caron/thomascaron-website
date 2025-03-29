@@ -2,7 +2,7 @@
     <header ref="el" class="absolute w-full bg-transparent border-none z-50 transition-all">
         <nav class="container flex flex-wrap items-center justify-between mx-auto px-3 sm:px-0 py-5">
             <a href="/" class="flex items-center">
-                <img src="build/images/logo.svg" class="h-10" alt="Thomas Caron Logo" />
+                <img src="build/images/logo.svg" class="h-10" width="40px" height="40px" alt="Thomas Caron Logo" />
             </a>
 
             <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">

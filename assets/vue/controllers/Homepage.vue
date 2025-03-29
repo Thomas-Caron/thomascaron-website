@@ -18,19 +18,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, defineAsyncComponent } from 'vue';
 
-import TopReturn from '../components/TopReturn.vue';
-import Toast from '../components/Toast.vue';
 import Header from '../layout/Header.vue';
 import Hero from '../layout/Hero.vue';
-import Tech from '../layout/Tech.vue';
-import Service from '../layout/Service.vue';
-import About from '../layout/About.vue';
-import Project from '../layout/Project.vue';
-import Reference from '../layout/Reference.vue';
-import Contact from '../layout/Contact.vue';
-import Footer from '../layout/Footer.vue';
+import Toast from '../components/Toast.vue';
+
+const Service = defineAsyncComponent(() => import('../layout/Service.vue'));
+const About = defineAsyncComponent(() => import('../layout/About.vue'));
+const Project = defineAsyncComponent(() => import('../layout/Project.vue'));
+const Reference = defineAsyncComponent(() => import('../layout/Reference.vue'));
+const Contact = defineAsyncComponent(() => import('../layout/Contact.vue'));
+const Footer = defineAsyncComponent(() => import('../layout/Footer.vue'));
+const TopReturn = defineAsyncComponent(() => import('../components/TopReturn.vue'));
 
 const toast = ref(null);
 const toastData = ref({

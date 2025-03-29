@@ -3,7 +3,7 @@
         <div class="container mx-auto px-3 sm:px-0 pt-12">
             <div class="flex justify-between py-5">
                 <a href="/" class="flex items-center">
-                    <img src="build/images/logo.svg" class="h-10" alt="Thomas Caron Logo" />
+                    <img src="build/images/logo.svg" class="h-10" alt="Thomas Caron Logo" width="40px" height="40px" />
                 </a>
                 <ul class="flex flex-col font-medium">
                     <li>

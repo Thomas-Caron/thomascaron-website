@@ -24,6 +24,7 @@ import Header from '../layout/Header.vue';
 import Hero from '../layout/Hero.vue';
 import Toast from '../components/Toast.vue';
 
+const Tech = defineAsyncComponent(() => import('../layout/Tech.vue'));
 const Service = defineAsyncComponent(() => import('../layout/Service.vue'));
 const About = defineAsyncComponent(() => import('../layout/About.vue'));
 const Project = defineAsyncComponent(() => import('../layout/Project.vue'));

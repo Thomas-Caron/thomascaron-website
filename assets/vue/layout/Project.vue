@@ -57,7 +57,7 @@ const cards = ref([
             'Création d\'un simulateur d\'intérêts composés',
             'Création d\'un simulateur de crédit immobilier',
         ],
-        url: 'https://thomascaron.finaro.com',
+        url: 'https://finaro.thomascaron.com',
     },
     {
         isWip: false,

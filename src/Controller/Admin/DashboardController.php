@@ -5,6 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\About;
 use App\Entity\Project;
 use App\Entity\Reference;
+use App\Service\GoogleAnalyticsService;
+use DateInterval;
+use DatePeriod;
+use DateTime;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -12,6 +16,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -23,28 +28,53 @@ class DashboardController extends AbstractDashboardController
 {
     public function __construct(
         private readonly UrlGeneratorInterface $urlGenerator,
-        private readonly ChartBuilderInterface $chartBuilder
+        private readonly ChartBuilderInterface $chartBuilder,
+        private readonly GoogleAnalyticsService $gaService,
+        private readonly RequestStack $requestStack
     )
     {}
 
     public function index(): Response
     {
-        $chart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
+        $request = $this->requestStack->getCurrentRequest();
+        $period = $request ? $request->query->get('period', '30days') : '30days';
+        $labels = [];
+        $dateRanges = [];
 
+        if ($period === '30days') {
+            $start = new DateTime('-29 days');
+            $end = new DateTime('today');
+            $interval = new DateInterval('P1D');
+            $periods = new DatePeriod($start, $interval, $end->add(new DateInterval('P1D')));
+            foreach ($periods as $date) {
+                $labels[] = $date->format('d M');
+                $dateRanges[] = ['startDate' => $date->format('Y-m-d'), 'endDate' => $date->format('Y-m-d')];
+            }
+        } else { // 6months ou 1year
+            $monthsCount = $period === '6months' ? 6 : 12;
+            for ($i = $monthsCount - 1; $i >= 0; $i--) {
+                $date = new DateTime("first day of -$i month");
+                $labels[] = $date->format('M Y');
+                $startDate = $date->format('Y-m-01');
+                $endDate = $date->format('Y-m-t');
+                $dateRanges[] = ['startDate' => $startDate, 'endDate' => $endDate];
+            }
+        }
+
+        $visitorsData = [];
+        foreach ($dateRanges as $range) {
+            $visitorsData[] = $this->gaService->getVisitors('247272259', $range['startDate'], $range['endDate']);
+        }
+
+        $chart = $this->chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
-            'labels' => ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+            'labels' => $labels,
             'datasets' => [
                 [
-                    'label' => 'Ventes',
+                    'label' => 'Visiteurs',
                     'backgroundColor' => 'rgba(75, 192, 192, 0.5)',
                     'borderColor' => 'rgba(75, 192, 192, 1)',
-                    'data' => [12, 19, 3, 5, 2, 3],
-                ],
-                [
-                    'label' => 'Dépenses',
-                    'backgroundColor' => 'rgba(255, 99, 132, 0.5)',
-                    'borderColor' => 'rgba(255, 99, 132, 1)',
-                    'data' => [8, 11, 7, 6, 4, 9],
+                    'data' => $visitorsData,
                 ],
             ],
         ]);
@@ -52,14 +82,13 @@ class DashboardController extends AbstractDashboardController
         $chart->setOptions([
             'responsive' => true,
             'scales' => [
-                'y' => [
-                    'beginAtZero' => true,
-                ],
+                'y' => ['beginAtZero' => true],
             ],
         ]);
 
         return $this->render('admin/dashboard.html.twig', [
             'chart' => $chart,
+            'period' => $period,
         ]);
     }
 

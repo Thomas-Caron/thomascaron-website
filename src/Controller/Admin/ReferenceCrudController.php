@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Reference;
-use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminCrud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -11,7 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-#[AdminCrud(routePath: '/references', routeName: 'reference')]
+
 class ReferenceCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

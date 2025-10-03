@@ -21,4 +21,20 @@ html, body {
     overflow-x: hidden;
     scroll-behavior: smooth;
     font-family: var(--font-lato);
-  }
+}
+
+.noise-filter {
+    position: fixed;
+    height: 300%;
+    width: 300%;
+    left: -100%;
+    top: -100%;
+    z-index: 90;
+    background-repeat: repeat;
+    opacity: 0.3;
+    visibility: visible;
+    pointer-events: none;
+    background: transparent url("../images/noise.png") repeat 0 0;
+    animation: bg-animation 15s infinite;
+    animation-timing-function: steps(11)
+}

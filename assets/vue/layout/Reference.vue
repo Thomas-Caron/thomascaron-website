@@ -5,9 +5,9 @@
                 <Fade direction="up">
                     <div class="flex items-center transition-transform duration-500 ease-in-out" :style="translateStyle">
                         <div v-for="(slide, index) in slides" :key="index" class="min-w-full px-15 md:px-40 lg:px-60 xl:px-80 pb-12">
-                            <p class="text-blue-gray text-lg font-semibold">{{ slide.fullname  }}</p>
+                            <p class="text-blue-gray text-lg font-semibold">{{ slide.firstname  }} {{ slide.lastname  }}</p>
                             <p class="text-blue-gray text-sm font-light italic">{{ slide.company  }}</p>
-                            <p class="text-blue-gray mt-5">{{ slide.message  }}</p>
+                            <p class="text-blue-gray mt-5" v-html="slide.content"></p>
                         </div>
                     </div>
 
@@ -51,18 +51,14 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import Fade from '../components/transitions/Fade.vue';
 
-const slides = ref([
-    {
-        fullname: 'Kimberley Darolles',
-        company: 'Com\'un loup',
-        message: 'Thomas est un développeur web très compétent et professionnel. Il a su répondre à mes besoins et m\'a accompagné tout au long du projet. Je suis très satisfaite de son travail et le recommandons vivement.',
-    },
-    {
-        fullname: 'Ludovic Drin',
-        company: 'Yoonest & Humansix',
-        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec purus nec nunc tincidunt ultricies. Nullam nec purus nec nunc tincidunt ultricies.',
-    },
-]);
+import useApi from '../composables/useApi.js';
+const { get } = useApi();
+
+const props = defineProps({
+    api: { type: Object, default: () => ({}) }
+});
+
+const slides = ref([]);
 
 const currentIndex = ref(0);
 let interval = null;
@@ -85,7 +81,18 @@ const startAutoSlide = () => {
 
 const translateStyle = computed(() => `transform: translateX(-${currentIndex.value * 100}%);`);
 
-onMounted(startAutoSlide);
+const getReferences = async () => {
+    const response = await get(props.api.getReferences);
+
+    if (response.success) {
+        slides.value = response.data;
+    }
+};
+
+onMounted(() => {
+    getReferences();
+    startAutoSlide();
+});
 
 onUnmounted(() => clearInterval(interval));
 </script>

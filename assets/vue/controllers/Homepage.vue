@@ -1,4 +1,5 @@
 <template>
+    <div class="noise-filter"></div>
     <Toast 
         ref="toast"
         id="toast"
@@ -9,9 +10,9 @@
     <Hero />
     <Tech />
     <Service />
-    <About />
-    <Project />
-    <Reference />
+    <About :api="api" />
+    <Project :api="api" />
+    <Reference :api="api" />
     <Contact  @showToast="showToast" />
     <Footer />
     <TopReturn />
@@ -23,6 +24,10 @@ import { ref, defineAsyncComponent } from 'vue';
 import Header from '../layout/Header.vue';
 import Hero from '../layout/Hero.vue';
 import Toast from '../components/Toast.vue';
+
+const props = defineProps({
+    api: { type: Object, default: () => ({}) }
+});
 
 const Tech = defineAsyncComponent(() => import('../layout/Tech.vue'));
 const Service = defineAsyncComponent(() => import('../layout/Service.vue'));

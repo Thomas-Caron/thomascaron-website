@@ -18,7 +18,7 @@
                 <p class="text-white text-lg text-center font-bold mt-3">En cours de développement</p>
             </div>
 
-            <img class="w-full h-50 object-cover" :src="image.path" :alt="image.alt" width="400px" height="200px" loading="lazy" />
+            <img class="w-full h-50 object-cover" :src="`/build/images/project/${image}`" alt="Logo entreprise" width="400px" height="200px" loading="lazy" />
             <div class="p-5">
                 <time class="block text-dark text-right text-sm font-extralight mb-3">{{ time }}</time>
 
@@ -26,14 +26,14 @@
                 <p class="text-dark font-light leading-none mb-3">{{ type }}</p>
 
                 <div class="relative mb-8">
-                    <ul 
+                    <div 
                         ref="el"
                         :class="[{ 'overflow-hidden': !expanded, 'h-48': !expanded,},
                             'text-dark'
                         ]"
                     >
-                        <li v-for="(content, index) in contents" :key="index">▸ {{ content }}</li>
-                    </ul>
+                        <p v-html="content"></p>
+                    </div>
 
                     <button 
                         v-if="isOverflowing" 
@@ -82,11 +82,8 @@ const prop = defineProps({
         default: false
     },
     image: {
-        type: Object,
-        default: {
-            path: '',
-            alt: ''
-        }
+        type: String,
+        defualt: '',
     },
     time: {
         type: String,
@@ -100,9 +97,9 @@ const prop = defineProps({
         type: String,
         default: ''
     },
-    contents: {
-        type: Array,
-        default: []
+    content: {
+        type: String,
+        default: ''
     },
     url: {
         type: String,

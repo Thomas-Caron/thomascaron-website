@@ -1,10 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-KZB5MBMCEV"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-KZB5MBMCEV');
+        </script>
+        
         <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1.0">
 
         <title>{% block title %}Thomas Caron - Développeur Web Fullstack (Symfony & Vue.js){% endblock %}</title>
-        <meta name="description" content="{% block meta_description %}Thomas Caron, développeur web fullstack à Nantes ou en fullremote, plus de 4 ans d'expérience, expert Symfony et Vue.js. J’accompagne les entreprises dans la création d’applications web sur mesure, performantes et évolutives. Besoin d’un site ou d’une application ? Contactez-moi !{% endblock %}">
+        <meta name="description" content="{% block meta_description %}Thomas Caron, développeur web fullstack à Nantes ou en fullremote, 5 ans d'expérience, expert Symfony et Vue.js. J’accompagne les entreprises dans la création d’applications web sur mesure, performantes et évolutives. Besoin d’un site ou d’une application ? Contactez-moi !{% endblock %}">
 
         <link rel="icon" type="image/png" href="/build/images/favicon/favicon-96x96.png" sizes="96x96" />
         <link rel="icon" type="image/svg+xml" href="/build/images/favicon/favicon.svg" />
@@ -14,7 +24,7 @@
         <link rel="manifest" href="/build/images/favicon/site.webmanifest" />
 
         <meta property="og:title" content="Thomas Caron - Développeur Web Fullstack (Symfony & Vue.js)">
-        <meta property="og:description" content="Thomas Caron, développeur web fullstack à Nantes ou en fullremote, plus de 4 ans d'expérience, expert Symfony et Vue.js. J’accompagne les entreprises dans la création d’applications web sur mesure, performantes et évolutives. Besoin d’un site ou d’une application ? Contactez-moi !">
+        <meta property="og:description" content="Thomas Caron, développeur web fullstack à Nantes ou en fullremote, 5 ans d'expérience, expert Symfony et Vue.js. J’accompagne les entreprises dans la création d’applications web sur mesure, performantes et évolutives. Besoin d’un site ou d’une application ? Contactez-moi !">
         <meta property="og:image" content="https://www.thomascaron.com/build/images/preview.jpg">
         <meta property="og:image:width" content="1200">
         <meta property="og:image:height" content="630">
@@ -31,9 +41,16 @@
         {% endblock %}
     </head>
     <body>
+
         {% block body %}
 
-            <div {{ vue_component('Homepage') }}></div>
+            <div {{ vue_component('Homepage', {
+                api: {
+                    getAbout: path('api_about'),
+                    getProjects: path('api_project'),
+                    getReferences: path('api_reference')
+                }
+            }) }}></div>
 
         {% endblock %}
     </body>

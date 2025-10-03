@@ -2,7 +2,14 @@
 
 {% block content_title %}Mon tableau de bord{% endblock %}
 {% block page_actions %}
-    <a class="btn btn-primary" href="...">Some Action</a>
+    <form method="get" id="periodForm">
+        <label for="period">Période :</label>
+        <select name="period" id="period" onchange="this.form.submit()">
+            <option value="30days" {% if period == '30days' %}selected{% endif %}>30 derniers jours</option>
+            <option value="6months" {% if period == '6months' %}selected{% endif %}>6 derniers mois</option>
+            <option value="1year" {% if period == '1year' %}selected{% endif %}>1 an</option>
+        </select>
+    </form>
 {% endblock %}
 
 {% block main %}
